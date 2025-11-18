@@ -1,0 +1,25 @@
+@reference "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom component styles */
+.container {
+  /* Tailwind v4 may not recognize `max-w-5xl` in @apply; keep layout simple */
+  @apply mx-auto px-4;
+}
+.nav-link {
+  @apply text-blue-400 hover:text-blue-300 transition-colors;
+}
+.btn {
+  @apply inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+.input {
+  @apply rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-sm text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400;
+}
+.select {
+  @apply rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-sm text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400;
+}
+.card {
+  @apply rounded-lg border border-gray-700 bg-gray-900 p-4 shadow;
+}
