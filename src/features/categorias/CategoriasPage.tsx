@@ -11,11 +11,11 @@ export function CategoriasPage() {
   })
 
   const [nome, setNome] = useState('')
-  const [tamanho, setTamanho] = useState<Tamanho>('MEDIO')
-  const [embalagem, setEmbalagem] = useState<Embalagem>('PLASTICO')
+  const [tamanho, setTamanho] = useState<Tamanho | ''>('')
+  const [embalagem, setEmbalagem] = useState<Embalagem | ''>('')
 
   const criarMut = useMutation({
-    mutationFn: () => criarCategoria({ nome, tamanho, embalagem }),
+    mutationFn: () => criarCategoria({ nome, tamanho: tamanho as Tamanho, embalagem: embalagem as Embalagem }),
     onSuccess: () => {
       setNome('')
       qc.invalidateQueries({ queryKey: ['categorias'] })
@@ -43,16 +43,21 @@ export function CategoriasPage() {
         <div className="flex flex-wrap items-center gap-2">
           <input className="input" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} />
           <select className="select" value={tamanho} onChange={(e) => setTamanho(e.target.value as Tamanho)}>
+            <option value="" disabled>Tamanho</option>
             <option value="PEQUENO">PEQUENO</option>
             <option value="MEDIO">MEDIO</option>
             <option value="GRANDE">GRANDE</option>
           </select>
           <select className="select" value={embalagem} onChange={(e) => setEmbalagem(e.target.value as Embalagem)}>
+            <option value="" disabled>Material</option>
             <option value="PLASTICO">PLASTICO</option>
             <option value="LATA">LATA</option>
-            <option value="PAPEL">PAPEL</option>
+            <option value="VIDRO">VIDRO</option>
           </select>
-          <button className="btn" onClick={() => criarMut.mutate()} disabled={criarMut.isPending || !nome}>Criar</button>
+          <button className="btn" onClick={() => criarMut.mutate()} disabled={criarMut.isPending || !nome || !tamanho || !embalagem}>Criar</button>
+        </div>
+        <div className="text-sm text-gray-400 mt-2">
+          Preview: Tamanho {tamanho || '—'} • Material {embalagem || '—'}
         </div>
       </div>
     </div>
